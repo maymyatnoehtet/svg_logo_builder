@@ -1,0 +1,25 @@
+{
+  "name": "svg-logo-builder",
+  "version": "1.0.0",
+  "description": "Generate the logo which satisfies the requirements in .svg file",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/maymyatnoehtet/svg_logo_builder.git"
+  },
+  "author": "May Myat Noe Htet",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/maymyatnoehtet/svg_logo_builder/issues"
+  },
+  "homepage": "https://github.com/maymyatnoehtet/svg_logo_builder#readme",
+  "dependencies": {
+    "inquirer": "^6.3.1"
+  },
+  "devDependencies": {
+    "jest": "^29.5.0"
+  }
+}
