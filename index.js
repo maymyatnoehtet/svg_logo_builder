@@ -1,6 +1,8 @@
 const { error } = require('console');
-const inquirer = require('inquier');
+const inquirer = require('inquirer');
 
+// regular expression for valid colour hex code
+const hexRegex = /^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/;
 // list of colours that js has predefined
 const predefinedColours = ["AliceBlue", "AntiqueWhite", "Aqua", "Aquamarine", "Azure", "Beige", "Bisque", "Black", "BlanchedAlmond", "Blue",
 "BlueViolet", "Brown", "BurlyWood", "CadetBlue", "Chartreuse", "Chocolate", "Coral", "CornflowerBlue", "Cornsilk",
@@ -30,7 +32,7 @@ const questions = [
         name: 'text',
         message: 'Enter a text(up to 3 characters): ',
         validate: function(input){
-            if ( 0 > input.length > 3 ) {
+            if (input.length > 3 || input.length < 1) {
                 return 'Please enter a text(up to 3 characters)';
             }
             return true;
@@ -42,8 +44,7 @@ const questions = [
         name: 'text-colour',
         message: 'Enter a text-colour: ',
         validate: function(input){
-            const regex = /^#[0-9A-Fa-f]{6}$/;
-            if ( !input.include(predefinedColours) || !regex.test(input)) {
+            if ((!(predefinedColours.includes(input))) && (!(hexRegex.test(input)))) {
                 return 'Please enter a valid colour in hex format (#RRGGBB) or valid predefined colour';
             }
             return true;
@@ -68,8 +69,7 @@ const questions = [
         name: 'shape-colour',
         message: 'Enter a shape-colour: ',
         validate: function(input){
-            const regex = /^#[0-9A-Fa-f]{6}$/;
-            if ( !input.include(predefinedColours) || !regex.test(input)) {
+            if ((!(predefinedColours.includes(input))) && (!(hexRegex.test(input)))) {
                 return 'Please enter a valid colour in hex format (#RRGGBB) or valid predefined colour';
             }
             return true;
@@ -77,9 +77,12 @@ const questions = [
     }
 ];
 
+/* function where inquirer is called */
 function init(){
     inquirer.prompt(questions)
         .then(answers => console.log(answers))
         .catch(error => {console.log.error});
     return;
 }
+
+init();
