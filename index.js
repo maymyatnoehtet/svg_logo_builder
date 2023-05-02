@@ -1,5 +1,6 @@
 const { error } = require('console');
 const inquirer = require('inquirer');
+const Shape = require('./lib/shapes');
 
 // regular expression for valid colour hex code
 const hexRegex = /^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/;
@@ -82,6 +83,12 @@ function init(){
     inquirer.prompt(questions)
         .then(answers => console.log(answers))
         .catch(error => {console.log.error});
+    return;
+}
+
+/* function to generate svg file */
+function generateSVG(answers){
+    
     return;
 }
 
