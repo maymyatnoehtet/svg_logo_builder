@@ -1,6 +1,6 @@
 const { error } = require('console');
 const inquirer = require('inquirer');
-const Shape = require('./lib/shapes');
+const shapes = require('./lib/shapes.js');
 const fs = require('fs');
 
 // regular expression for valid colour hex code
@@ -68,7 +68,7 @@ const questions = [
     // colour of the shape
     {
         type: 'input',
-        name: 'shape-colour',
+        name: 'shapeColour',
         message: 'Enter a shape-colour: ',
         validate: function(input){
             if ((!(predefinedColours.includes(input))) && (!(hexRegex.test(input)))) {
@@ -90,13 +90,32 @@ function init(){
 /* function to generate svg file */
 function generateSVG(inputs){
     // to generate shape filled with the colour
-    var logoShape = `${inputs.shape}`;
-    var shapeColour = `${inputs.shape-colour}`;
-    console.log(`${inputs.shape} is generated`);
-    var generateLogoShape = new logoShape();
-    generateLogoShape.setColor(shapeColour);
-    generateLogoShape.render();
+    switch (inputs.shape) {
+        case 'Rectangle':
+            console.log('Rectangle case');
+            const rectangle = new shapes.Rectangle();
+            rectangle.setColor(inputs.shapeColour);
+            rectangle.render();
+            break;
+    
+        case 'Circle':
+            console.log('Circle case');
+            const circle = new shapes.Circle();
+            circle.setColor(inputs.shapeColour);
+            circle.render();
+            break;
+
+        case 'Triangle':
+            console.log('Triangle case');
+            const triangle = new shapes.Triangle();
+            triangle.setColor(inputs.shapeColour);
+            triangle.render();
+            break;
+    }
 }
 
-init();
 
+const svgString = '<svg width="100" height="100"><circle cx="50" cy="50" r="40" fill="red"/></svg>';
+fs.writeFileSync('output.svg', svgString);
+
+init();
