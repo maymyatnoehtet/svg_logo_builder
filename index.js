@@ -1,6 +1,7 @@
 const { error } = require('console');
 const inquirer = require('inquirer');
 const Shape = require('./lib/shapes');
+const fs = require('fs');
 
 // regular expression for valid colour hex code
 const hexRegex = /^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/;
@@ -56,7 +57,7 @@ const questions = [
         type: 'list',
         name: 'shape',
         message: 'Choose a shape: ',
-        choices: ['rectangle', 'triangle', 'circle'],
+        choices: ['Rectangle', 'Triangle', 'Circle'],
         validate: function(input) {
             if(input.length === 0) {
                 return 'Please select a shape.';
@@ -81,15 +82,21 @@ const questions = [
 /* function where inquirer is called */
 function init(){
     inquirer.prompt(questions)
-        .then(answers => console.log(answers))
+        .then(answers => generateSVG(answers))
         .catch(error => {console.log.error});
     return;
 }
 
 /* function to generate svg file */
-function generateSVG(answers){
-    
-    return;
+function generateSVG(inputs){
+    // to generate shape filled with the colour
+    var logoShape = `${inputs.shape}`;
+    var shapeColour = `${inputs.shape-colour}`;
+    console.log(`${inputs.shape} is generated`);
+    var generateLogoShape = new logoShape();
+    generateLogoShape.setColor(shapeColour);
+    generateLogoShape.render();
 }
 
 init();
+
