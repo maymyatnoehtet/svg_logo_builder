@@ -81,13 +81,7 @@ const questions = [
         type: 'list',
         name: 'shape',
         message: 'Choose a shape: ',
-        choices: ['Rectangle', 'Triangle', 'Circle'],
-        validate: function(input) {
-            if(input.length === 0) {
-                return 'Please select a shape.';
-            }
-            return true;
-        }
+        choices: ['Circle', 'Square', 'Triangle']
     },
     // colour of the shape
     {
