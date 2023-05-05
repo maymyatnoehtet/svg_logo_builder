@@ -1,7 +1,31 @@
 const { error } = require('console');
 const inquirer = require('inquirer');
-const shapes = require('./lib/shapes.js');
+const {Triangle, Circle, Rectangle} = require('./lib/shapes.js');
 const fs = require('fs');
+
+// svg class
+class SVG{
+    constructor(){
+        this.textEl = ''
+        this.shapeEl = ''
+    }
+
+    // render svg logo with chosen text, shape and their colours
+    render(){
+        return `<svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="300" height="200">${this.shapeEl}${this.textEl}</svg>`
+    }
+
+    // input text as svg
+    setTextEl(text,color){
+        this.textEl = `<text x="150" y="125" font-size="60" text-anchor="middle" fill="${color}">${text}</text>`
+    }
+
+    // chosen shape as svg
+    setShapeEl(shape){
+        this.shapeEl = shape.render()
+
+    }
+}
 
 // regular expression for valid colour hex code
 const hexRegex = /^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/;
@@ -43,7 +67,7 @@ const questions = [
     // colour of the text
     {
         type: 'input',
-        name: 'text-colour',
+        name: 'textColour',
         message: 'Enter a text-colour: ',
         validate: function(input){
             if ((!(predefinedColours.includes(input))) && (!(hexRegex.test(input)))) {
@@ -90,32 +114,38 @@ function init(){
 /* function to generate svg file */
 function generateSVG(inputs){
     // to generate shape filled with the colour
+    let chosenShape;
     switch (inputs.shape) {
         case 'Rectangle':
             console.log('Rectangle case');
-            const rectangle = new shapes.Rectangle();
-            rectangle.setColor(inputs.shapeColour);
-            rectangle.render();
+            chosenShape = new Rectangle();
+            chosenShape.setColor(inputs.shapeColour);
+            chosenShape.render();
             break;
     
         case 'Circle':
             console.log('Circle case');
-            const circle = new shapes.Circle();
-            circle.setColor(inputs.shapeColour);
-            circle.render();
+            chosenShape = new Circle();
+            chosenShape.setColor(inputs.shapeColour);
+            chosenShape.render();
             break;
 
         case 'Triangle':
             console.log('Triangle case');
-            const triangle = new shapes.Triangle();
-            triangle.setColor(inputs.shapeColour);
-            triangle.render();
+            chosenShape = new Triangle();
+            chosenShape.setColor(inputs.shapeColour);
+            chosenShape.render();
             break;
     }
+    // create new svg
+    var svg = new SVG();
+    svg.setTextEl(inputs.text, inputs.textColour);
+    svg.setShapeEl(chosenShape);
+    svgString = svg.render();
+    // writing into .svg file
+    fs.writeFileSync('logo.svg', svgString)
+        .catch((error) => { console.error(error); });
+
 }
-
-
-const svgString = '<svg width="100" height="100"><circle cx="50" cy="50" r="40" fill="red"/></svg>';
-fs.writeFileSync('output.svg', svgString);
 
 init();
