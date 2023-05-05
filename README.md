@@ -1,7 +1,7 @@
 # Logo Builder
 To build a Node.js command-line application that takes in user input to generate a logo and save it as an SVG file links to an external site. The application prompts the user to select a colour and shape, provide text for the logo, and save the generated SVG to a .svg file.
 
-Video Link:
+Video Link: #################################################
 Repo Link: https://github.com/maymyatnoehtet/svg_logo_builder
 
 # Installation
@@ -40,3 +40,21 @@ AND the output text "Generated logo.svg" is printed in the command line
 WHEN I open the `logo.svg` file in a browser
 THEN I am shown a 300x200 pixel image that matches the criteria I entered
 ```
+
+# Test
+
+```
+const Circle = require("./shapes")
+/* from Challenge 10 Requirements page */
+// Circle Shape
+describe('Circle', () => {
+    test('Renders correctly', () => {
+      const shape = new Circle();
+      var color =('blue')
+      shape.setColor(color);
+      expect(shape.render()).toEqual(`<circle cx="50%" cy="50%" r="100" height="100%" width="100%" fill="${color}" />`);
+    });
+  });
+``` 
+
+![Alt text](./images/npm-test.png "Test pass Image")
