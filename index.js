@@ -1,6 +1,6 @@
 const { error } = require('console');
 const inquirer = require('inquirer');
-const {Triangle, Circle, Rectangle} = require('./lib/shapes.js');
+const {Circle, Square, Triangle} = require('./lib/shapes.js');
 const fs = require('fs');
 
 // svg class
@@ -116,27 +116,25 @@ function generateSVG(inputs){
     // to generate shape filled with the colour
     let chosenShape;
     switch (inputs.shape) {
-        case 'Rectangle':
-            console.log('Rectangle case');
-            chosenShape = new Rectangle();
+        case 'Circle':
+            chosenShape = new Circle();
             chosenShape.setColor(inputs.shapeColour);
             chosenShape.render();
             break;
-    
-        case 'Circle':
-            console.log('Circle case');
-            chosenShape = new Circle();
+        
+        case 'Square':
+            chosenShape = new Square();
             chosenShape.setColor(inputs.shapeColour);
             chosenShape.render();
             break;
 
         case 'Triangle':
-            console.log('Triangle case');
             chosenShape = new Triangle();
             chosenShape.setColor(inputs.shapeColour);
             chosenShape.render();
             break;
     }
+
     // create new svg
     var svg = new SVG();
     svg.setTextEl(inputs.text, inputs.textColour);
@@ -145,7 +143,6 @@ function generateSVG(inputs){
     // writing into .svg file
     fs.writeFileSync('logo.svg', svgString)
         .catch((error) => { console.error(error); });
-
 }
 
 init();
